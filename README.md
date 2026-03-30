@@ -14,9 +14,11 @@ project-root/
 │   └── activities.csv            # Local CSV with activity data
 ├── data_viz_notebook.ipynb       # Jupyter Notebook with Markdown and Python code
 ├── docs                          # Folder with local documentation files
-│   └── assignment.pdf            # Assignment instructions
+│   ├── assignment.pdf            # Assignment instructions
+│   └── report.pdf                # TODO: To be added
 ├── environment.yml               # Conda environment declaration
 ├── README.md                     # This file
+└── video.md                      # TODO: To be added
 ```
 
 ### Pthon environment
