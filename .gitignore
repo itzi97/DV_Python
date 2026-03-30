@@ -214,3 +214,39 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Core LaTeX auxiliary files
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+.*.lb
+
+# Intermediate docs
+*.dvi
+*.xdv
+*-converted-to.*
+
+# Build tools
+*.fdb_latexmk
+*.synctex*
+latex.out/
+
+# Bibliography
+*.bbl
+*.blg
+*.bcf
+
+# Editors/IDEs
+auto/
+*.el
+.DS_Store
+.idea/
+.vscode/settings.json
