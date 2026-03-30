@@ -6,7 +6,16 @@ Below is a detailed explanation of how to set up the project for proper executio
 
 ### Project structure
 
-All the files must be 
+All the files must be at root directory for propper function.
+
+```sh
+project-root/
+├── Visualization.ipynb          # Jupyter Notebook with Python and Markdown
+├── activities.csv               # Local CSV
+├── Assignment.pdf               # Assignment instructions
+├── environment.yml              # Conda environment declaration
+└── README.md                    # This file
+```
 
 ### Pthon environment
 
