@@ -10,11 +10,13 @@ All the files must be at root directory for propper function.
 
 ```sh
 project-root/
-├── Visualization.ipynb          # Jupyter Notebook with Python and Markdown
-├── activities.csv               # Local CSV
-├── Assignment.pdf               # Assignment instructions
-├── environment.yml              # Conda environment declaration
-└── README.md                    # This file
+├── data                          # Folder with local data files
+│   └── activities.csv            # Local CSV with activity data
+├── data_viz_notebook.ipynb       # Jupyter Notebook with Markdown and Python code
+├── docs                          # Folder with local documentation files
+│   └── assignment.pdf            # Assignment instructions
+├── environment.yml               # Conda environment declaration
+├── README.md                     # This file
 ```
 
 ### Pthon environment
