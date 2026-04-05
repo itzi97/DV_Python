@@ -27,24 +27,57 @@
 \tableofcontents
 \newpage
 
-\section{Introduction \& Dataset}
-% Brief dataset desc + questions overview
+\section{Introduction}
+% Introduction to assignment (brief description, goals)
 
 \par
-The aim of this project is to explore data visualization using Python and 
-different Python liraries. The assignment prompt allowed for several Python
-libraries to be used including:
+The aim of this project is to explore data visualization using Python, from
+selecting the data all the way to telling a story through it's visualization.
+
+\subsection{Methodology}
+
+\par
+The project itself followed the following process to achieve the previously
+mentioned goal:
+
+\begin{enumerate}
+  \item Choose dataset.
+  \item Analyze and process data.
+  \item Think of questions to answer with visualizations.
+  \item Choose visualizations types.
+  \item Choose libraries.
+  \item \dots % TODO: Include other things being done here
+\end{enumerate}
+
+\subsection{Sources}
+
+\par
+Numerous sources are used through out the project such as:
 
 \begin{itemize}
-  \item \href{https://matplotlib.org/}{Matplotlib}
-  \item \href{https://ipywidgets.readthedocs.io/en/latest/}{ipywidgets}
-  \item \href{https://plotly.com/python/}{Plotly}
-  \item \href{https://bokeh.org/}{Bokeh}
-  \item \href{https://pypi.org/project/jupyter-dash/}{Jupyter Dash}
-  \item \href{https://seaborn.pydata.org/}{Seaborn}
+  \item AI
+  \item Documentation
+  \item Forums
+  \item \dots
 \end{itemize}
 
-\subsection{Dataset}
+Regardless of the source, these are indicated through bibliography/references or
+in the case of AI, an explicit note indicating the model and prompt used.
+
+\subsection{AI Usage}
+
+\par
+A point was made to use AI in this project in a manner in which it's answers are
+scrutinized and reviewed, to make sure hallucinations are not taken into 
+account and answers are not just implemented without a second thought. This
+way, and active usage of AI is encouraged with certain restraints in place.
+
+\par
+AI being used for this project was also hosted locally, using smaller models to 
+do so making it's usage more reproducible. 
+
+\section{Dataset}
+% Brief dataset desc + questions overview
 
 \par
 Data for this project was required to not have been selected by a different 
@@ -59,6 +92,92 @@ The data set, located in \lstinline{./data/activities.csv}, consists of:
   \item Data spanning from: 21 February 2021 - 30 March 2026 (5 years).
   \item Varying data types (integers, floats, dates, time spans, locations, strings).
 \end{itemize}
+
+\par
+Having 31 columns allows for many different questions to be asked about the 
+dataset, allowing it to be explored in multiple ways if desired. The limited
+number of rows (180) whist still being a decent amount, allows it's content to
+be analyzed in a more hands on way, being able to be more critical about each
+specific row and actively engage in processing in a more granular fashion. The
+dates spanning 5 years back allows for a story to be told through time, and
+analyze factors like consistency. Lastly, the varying data types allows for
+different types of visualizations that require different data types to be used
+such as maps (with location).
+
+\subsection{Analysis}
+
+\par
+Before asking questions about the dataset, the dataset was further analyzed
+using both the \lstinline{df.info()} function to check how the data was 
+imported into the pandas dataframe.
+
+\par
+A small AI analysis was invoked using qwen2.5:14b for the prompt which was the
+following:
+
+\begin{quote}
+  Read the linked CSV file and analyze it, create a table with the following 
+  fields:
+  \begin{itemize}
+    \item N\cdeg: Column number.
+    \item Column: Column name.
+    \item Description: Content description (what the data in the column 
+      usually looks like), excluding null indicators).
+    \item Null indicator: Indicator that seems to be used for when the data is
+      null.
+    \item Data type: Suggested data type to be used when reading CSV in Pandas.
+  \end{itemize}
+\end{quote}
+
+\par
+The table generated was then used as a starting point although it's content was
+scrutinized and interpreted correctly, assessing whether or not the AI had 
+hallucinated when generating it. Some important conclusions reached with the 
+help of this analysis were:
+
+\begin{itemize}
+  \item Some columns weren't really needed or used (such as \textit{Favorite}).
+  \item \lstinline{--} was used as a null indicator on most columns.
+  \item Correct data types for each column.
+\end{itemize}
+
+\subsection{Processing}
+
+\par
+Processing the data in this case consisted of the following steps:
+
+\begin{enumerate}
+  \item Deleting unused columns.
+  \item Changing Null indicator for None values when applicable.
+  \item Clean data (change it to usable format).
+  \item Set correct data type to column.
+\end{enumerate}
+
+\par
+These were done using the following libraries:
+
+\begin{itemize}
+  \item \href{https://pandas.pydata.org/}{Pandas}
+  \item \href{https://numpy.org/}{NumPy}
+  \item \href{https://docs.python.org/3/library/re.html}{re}
+\end{itemize}
+
+\subsection{Questions}
+
+\par
+Having analyzed and processed the data, many rows and columns were cleaned up
+from the dataset and columns were changed to the correct format. Having the
+data in this format, allowed for questions to be asked since now there is a
+better idea of the data at hand. The following questions were therefore asked
+taking into account the current state of the data:
+
+
+% TODO: Ask questions
+\begin{enumerate}
+  \item Question 1
+  \item Question 2
+  \item Question 3
+\end{enumerate}
 
 \section{Data Processing \& EDA}
 % Cleaning, exploration steps (link to notebook)
@@ -75,23 +194,6 @@ The data set, located in \lstinline{./data/activities.csv}, consists of:
 \subsection{Question 3}
 
 \section{Visualization Summary}
-% Assignment requirements table
-\begin{table}[h]
-\centering
-\begin{tabular}{lllll}
-\toprule
-Question & Charts & Type & Library & Screenshot \\
-\midrule
-%1 & Image 1 & Violin & Matplotlib & Fig.~\ref{fig:chart1} \\
-%  & Image 2 & Histogram & Matplotlib & Fig.~\ref{fig:chart2} \\
-%2 & Image 3 & Line & Plotly & Fig.~\ref{fig:chart3} \\
-%3 & Image 4 & Bar & Seaborn & Fig.~\ref{fig:chart4} \\
-%  & Image 5 & Bar & Seaborn & Fig.~\ref{fig:chart5} \\
-X  & Image X & Bar & Seaborn & Fig. TODO \\
-\bottomrule
-\end{tabular}
-\caption{Requirements fulfillment summary}
-\end{table}
 
 \section{Visualizations}
 \subsection{Chart 1}
@@ -104,8 +206,26 @@ X  & Image X & Bar & Seaborn & Fig. TODO \\
 
 % Repeat for charts 2-5...
 
+\section{Summary Table}
+% Assignment requirements table
+\begin{table}[h]
+  \centering
+  \begin{tabular}{lllll}
+    \toprule
+    Question & Charts & Chart Type & Library \\
+    \midrule
+    1 & TODO & TODO & TODO \\
+      & TODO & TODO & TODO \\
+    2 & TODO & TODO & TODO \\
+      & TODO & TODO & TODO \\
+    3 & TODO & TODO & TODO \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
 \section{Conclusions}
 % Your analysis
+
 
 \section*{AI Usage Declaration}
 % ``I used AI for X but wrote all code myself'' or ``No AI used''
