@@ -9,10 +9,11 @@
 \usepackage{booktabs}  % Summary tables
 \usepackage{tocloft}   % TOC customization
 \usepackage{amsmath}   % Math if needed
+\usepackage{hyperref}  % Clickable links
 
-% Bibliography (uncomment if using .bib)
-% \usepackage[style=authoryear]{biblatex}
-% \addbibresource{bibliography.bib}
+% Bibliography
+\usepackage[style=authoryear, backend=biber, sorting=nyt]{biblatex}
+\addbibresource{report.bib}
 
 \title{Python Data Visualization Assignment Report}
 
@@ -171,13 +172,43 @@ data in this format, allowed for questions to be asked since now there is a
 better idea of the data at hand. The following questions were therefore asked
 taking into account the current state of the data:
 
-
-% TODO: Ask questions
 \begin{enumerate}
-  \item Question 1
-  \item Question 2
-  \item Question 3
+  \item What kind of activities are being recorded?\label{q1}
+  \item Are the recorded activities showing enough weekly activity?\label{q2}
+  \item Where are activities being recorded, and how do activity patterns differ 
+    by location?\label{q3}
 \end{enumerate}
+
+\par
+Each question and why they were chosen i explained below:
+
+\subsubsection{Question~\ref{q1}: Activity Composition}
+\par
+Question~\ref{q1} is a good starting question because it dives into 
+categorizing data into different types of activity which is a good starting
+point to understand what type of data is being recorded and later explored in
+other questions.
+
+\subsubsection{Question~\ref{q2}: Weekly Activity Assessment}
+\par
+Question~\ref{q2} proceeds naturally from question~\ref{q1} as it benchmarks
+personal fitness against WHO guidelines\parencite{WHO2020} (150 min moderate 
+or 75 min vigorous per week). This question requires aggregating Time by week 
+and classifying intensity via Avg HR threshholds, enabling trend analysis over 5 
+years.
+
+\subsubsection{Question~\ref{q3}: Geographic Patterns}
+\par
+Question~\ref{q3} adds spatial context by extracting locations from Title,
+mapping activity density and compraing metrics by place. It also incentivizes
+data to be used in a more creative way, not just looking at the given fields, 
+but extracting a whole different field type to create a new field type such as
+location in this case from just a title.
+
+\subsubsection{Question Specific Feature Engineering}
+\par
+To answer the questions, additional derived columns were created in the 
+notebook:
 
 \section{Data Processing \& EDA}
 % Cleaning, exploration steps (link to notebook)
@@ -231,6 +262,6 @@ taking into account the current state of the data:
 % ``I used AI for X but wrote all code myself'' or ``No AI used''
 
 \section*{Bibliography}
-% \printbibliography  % Uncomment if using biblatex
+\printbibliography 
 
 \end{document}
