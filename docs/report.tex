@@ -1,37 +1,99 @@
-\documentclass[a4paper,12pt]{article}
+\documentclass[a4paper,11pt]{article}
+
+% Page geometry
+\usepackage[margin=2cm,top=2.5cm,bottom=2.5cm]{geometry}
 
 % Essential packages
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[margin=2.5cm]{geometry}
-\usepackage{graphicx} % For screenshots
-\usepackage{hyperref} % Links (video)
-\usepackage{booktabs} % Summary tables
-\usepackage{tocloft} % TOC customization
-\usepackage{amsmath} % Math if needed
-\usepackage{hyperref} % Clickable links
-\usepackage{listings} % Code listings
-\usepackage{xcolor} % Code colors
+\usepackage{microtype} % Better typography
 
-% Bibliography
-\usepackage[style=authoryear, backend=biber, sorting=nyt]{biblatex}
-\addbibresource{report.bib}
+% COLORS (matching your charts: warm beige + teal accent)
+\usepackage[dvipsnames]{xcolor}
+\definecolor{background}{HTML}{f8fafc}
+\definecolor{surface}{HTML}{f8fafc}
+\definecolor{textmuted}{HTML}{7a7974}
+\definecolor{accent}{HTML}{01696f}
+\definecolor{grid}{HTML}{dcd9d5}
+\definecolor{success}{HTML}{437a22}
+\definecolor{deepgreen}{HTML}{2e5c10}
 
-% Code listing style
+% Modern font (Satoshi/General Sans equivalent)
+\usepackage[scaled]{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{libertinus}
+
+
+% Tables
+\usepackage{booktabs}
+\usepackage{siunitx} % Numbers
+
+% Listings (code)
+\usepackage{listings}
+\usepackage{xcolor}
 \lstset{
-  basicstyle=\ttfamily\small,
+  basicstyle=\ttfamily\small\color{black},
   breaklines=true,
   frame=single,
-  backgroundcolor=\color{gray!10}
+  backgroundcolor=\color{background!90},
+  numbers=left,
+  numberstyle=\tiny\color{textmuted},
+  keywordstyle=\color{accent},
+  commentstyle=\color{black},
+  stringstyle=\color{success}
 }
 
-\title{Python Data Visualization Assignment Report}
-\author{Itziar Morales Rodríguez}
-\date{April 12, 2026}
+% Bibliography
+\usepackage[style=numeric,autocite=superscript,backend=biber,sorting=none]{biblatex}
+\addbibresource{./report.bib}
+
+% Graphics and links
+\usepackage{graphicx}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=accent,
+  urlcolor=accent,
+  citecolor=accent,
+  pdfborder={0 0 0}
+}
+
+% Headers/footers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Python Data Visualization Report}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{\small Itziar Morales Rodríguez}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\color{grid}\hrule height 0.4pt}
+
+% Title formatting
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries\color{accent}}{\thesection}{0.5em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{black}}{\thesubsection}{0.5em}{}
+\titlespacing*{\section}{0pt}{1.5em}{0.8em}
+\titlespacing*{\subsection}{0pt}{1.2em}{0.6em}
+
+% Custom colors for enumerations
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=*}
+\setlist[enumerate]{leftmargin=*}
+
+% Background (subtle)
+\usepackage{afterpage}
+\AfterPage{\pagecolor{background}\color{black}}
+
+\title{\color{accent}\Huge Python Data Visualization\\Assignment Report}
+\author{\Large\color{black}Itziar Morales Rodríguez}
+\date{\large\color{black}April 12, 2026}
 
 \begin{document}
+\pagecolor{background}\color{black}
 
 \maketitle
+\vspace{1em}
+\hrule height 1pt \color{black}
 
 % Table of Contents
 \tableofcontents
@@ -39,151 +101,220 @@
 
 \section{Introduction}
 
-This report presents a comprehensive data visualization analysis of personal fitness activity data recorded over 5 years (2021–2026) using a Garmin Forerunner 245. The project demonstrates best practices from Unit 1 while answering three analytical questions through 5 visualizations using 3 libraries and the primary CSV dataset.
+\par
+The aim of this project is to explore data visualization using Python, from
+selecting the data all the way to telling a story through it's visualization.
 
 \subsection{Methodology}
 
-The visualization process followed these steps:
+\par
+The project itself followed the following process to achieve the previously
+mentioned goal:
 \begin{enumerate}
-\item Data exploration and cleaning using Pandas/NumPy
-\item Question formulation based on data patterns
-\item Library selection: Matplotlib (core), Seaborn (heatmaps), ipywidgets (interactivity)
-\item Iterative chart refinement following Tufte's principles of data-ink ratio and clarity
-\item Export to publication-ready PNGs for LaTeX integration
+	\item Dataset selection
+	\item Data analysis and processing
+	\item Questions derived from the dataset
+	\item Visualization types needed to answer each question and storytell
+	\item Further data processing needed for each visualization
+	\item Library selection for each visualization
+	\item Package visualizations within a combined story narrative that tells a
+	      story about the data
 \end{enumerate}
 
 \subsection{Sources}
 
-Key resources included:
+\par
+Numerous sources are used through out the project such as:
+
 \begin{itemize}
-\item \href{https://matplotlib.org/stable/}{Matplotlib documentation}
-\item \href{https://seaborn.pydata.org/}{Seaborn documentation}
-\item \href{https://ipywidgets.readthedocs.io/}{ipywidgets documentation}
-\item \href{https://www.who.int/initiatives/behealthy/physical-activity}{WHO physical activity guidelines}
-\item Course lecture slides (Unit 1)
-\item Local Qwen2.5:14B for initial data schema analysis (prompts documented)
+	\item AI
+	\item Documentation
+	\item Forums
+	\item Literature
+	\item Lecture notebooks
 \end{itemize}
 
-\subsection{AI Usage Declaration}
+\par
+Regardless of the source, these are indicated through bibliography/references
+or in the case of AI, an explicit note indicating the model and prompt used.
 
-AI (Qwen2.5:14B local) was used solely for initial CSV schema analysis. All code, chart design decisions, and analysis written manually after AI suggestions were verified. Prompts and outputs available in notebook.
+\subsection{AI Usage}
+
+\par
+A point was made to use AI in this project in a manner in which it's answers
+are scrutinized and reviewed, to amke sure hallucinations are not taken into
+account and answers are not just implemented without a second thought. This
+way, an activate usage of AI is incentivized with certain restraints in place.
+
+\par
+AI being used for this project was also hosted locally, using smaller models to
+do so to encourage reproduciability (since prompts are also included within
+the notebook and report).
 
 \section{Dataset}
 
-The dataset (\texttt{data/activities.csv}) contains 180 workouts across 31 columns from Feb 21, 2021 to Mar 30, 2026:
+\par
+Data for this project was required to not have been selected by a different
+student. To minimize the risk of this happening, activity from a Gamrmin
+Forerunner 245 was chosen, reducing the chances of another student having the
+same dataset. The data located in \texttt{./data/activities.csv} consists of:
 
 \begin{itemize}
-\item \textbf{Key columns}: Date, Activity Type, Time, Distance, Avg HR, Max HR, Calories, Elevation Gain
-\item \textbf{Activity types}: Running, Walking, Cycling, Strength, Swimming, etc.
-\item \textbf{Data types}: Dates, numerics, categorical, geospatial (Title contains locations)
+	\item \textbf{Shape}: 31 columns \& 180 rows
+	\item \textbf{Date span}: 21 February 2021 - 30 March 2026 (5 years)
+	\item \textbf{Data types}: Dates, numerics, categorical, geospatial (Title
+	      contains locations)
+	\item \textbf{Key columns}: Date, Activity Type, Time, Distance, Avg HR
+	\item \textbf{Activity types}: Running, Walking, Cycling, Strength, Swimming,
+	      etc.
 \end{itemize}
 
-Initial AI-assisted schema analysis identified `--` as null indicator and suggested data types, all manually verified.
+\par
+Having 31 columns allows for many different questions to be asked about the
+dataset, specially since some of these columns allow for other data fields to
+be extracted (activity intensity from Avg HR). The limited number of rows (180)
+whilst still being a decent amount, allows it's content to be analyzed in a
+more hands on way, being able to be more critical about each specific row and
+actively engage in processing in a more granular fashion. The dates spanning 5
+years back allows for a story to be told through time, and analyze factors
+such as consistency. Lastly, varying data types allows for distinct types of
+visualizations that require specific untis to be used such as coordinates
+(from location).
+
+\subsection{Analysis}
+
+\par
+Before asking questions about the dataset, it was further analyzed using both
+the \texttt{df.info()} function to check how the data was imported into the
+pandas dataframe. A small AI analysis was invoked using qwen3.5:9b for the
+prompt which was the following:
+
+\begin{center}
+	Read the linked CSV file and analyze it, create a table with the following
+	fields:
+	\begin{itemize}
+		\item N: Column number
+		\item Column: Column name
+		\item Description: Content description (what the data in the column usually)
+		      looks like), excluding null indicators
+		\item Null indicator: Indicator that seems to be used for when the data is
+		      null
+		\item Data type: Suggested data type to be used when reading CSV in Pandas.
+	\end{itemize}
+\end{center}
+
+\par
+The table generated was then used as a starting point although it's content was
+scrutinized and interprerted correctly, assessing whether or not the AI had
+hallucinated when generating it. Some important conclusions reached with the
+help of this analysis (done in section 2.1 of \texttt{data\_viz\_notebook.ipynb})
+where:
+
+\begin{itemize}
+	\item Some columns weren't really needed or used, such as \textit{Favorite}
+	\item "\texttt{--}" was used as a null indicator on most columns
+	\item Correct data types for each column
+	\item Some columns belonged to specific activity types, such as \textit{Avg.
+		      Swolf} for swimming
+\end{itemize}
 
 \subsection{Processing}
 
-Key preprocessing steps (notebook Section 2):
+\par
+Key processing steps (section 3 of \texttt{data\_viz\_notebook.ipynb}):
+
 \begin{itemize}
-\item Replaced `--` nulls with NaN
-\item Converted Time/Distance to numeric (regex parsing)
-\item Extracted locations from Title
-\item Created WHO-equivalent minutes from Avg HR thresholds
-\item Weekly aggregation for time series analysis
+	\item Replaced `--` nulls with NaN
+	\item Converted Time/Distance to numeric (regex parsing)
+	\item Extracted locations from Title
+	\item Created WHO-equivalent activity minutes\autocite[32]{WHO2020} from
+	      Avg HR thresholds
+	\item Weekly aggregation for time series analysis
+	\item Activity Type simplification (treadmill running, trail running,
+	      running are all running)
 \end{itemize}
 
-Libraries: Pandas, NumPy, re (regex)
+Libraries: Pandas\autocite{pandas}, NumPy\autocite{numpy}, re\autocite{re}
+(regex)
+
+Some of the data processing was effectuated in order to satisfy the data
+requirements of some of the visualizations, which will be explained in the
+following section.
 
 \subsection{Research Questions}
 
 Three questions were formulated based on data exploration:
 
 \begin{enumerate}
-\item \textbf{Q1}: What types of activities dominate the dataset and their frequencies?
-\item \textbf{Q2}: Do weekly totals meet WHO guidelines (150/300 min equivalents)?
-\item \textbf{Q3}: How do activity patterns vary by location (Madrid vs others)?
+	\item What types of activities dominate the dataset and their frequencies?
+	\item How do activity patterns vary by location?
+	\item Do recorded activities show case "enough" weekly exercise?
 \end{enumerate}
 
-\section{Visualizations}
+\subsubsection{Question 1: Activity Composition}\label{q1}
 
-\subsection{Question 1: Activity Composition}
+\par
+Question 1 is a good starting point because it allows for the superficial
+exploratory analysis of the data. This facilitates the understanding of what
+activity types end up shaping most of the data, and is a good starting point
+that is taken into account when further exploring other questions.
 
-Figure~\ref{fig:q1-activity-types} shows activity type distribution:
+\subsubsection{Question 2: Geographic Patterns}\label{q2}
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.85\textwidth]{../figures/q1_activity_types.png}
-    \caption{Distribution of 180 recorded activities by type. Running dominates (47\%), followed by strength training (22\%).}
-    \label{fig:q1-activity-types}
-\end{figure}
+\par
+Question 2 proceeds naturally from question 1, as it further dives into
+understanding the nature of the data, in this case, classifying it into
+geogrpahic location rather than categorical activity types. Furthermore, it
+also enables the use of different visualization methods due to the unique
+geographic data type, location.
 
-\textbf{Library}: Seaborn (barplot) + Matplotlib. Horizontal bars maximize readability for 8 categories.
+\subsubsection{Question 3: Weekly Activity Assessment}\label{q3}
 
-\subsection{Question 2: Weekly WHO Performance (Q2.1 - Overview)}
+\par
+Question 3 is purposefully subjective to some degree, to allow for a variety of
+approaches to visualizing and analysing the data, alongside more liberty when
+it comes to choosing what narrative to pursue in storytelling. This allows for
+many different charts to be used, and for data to be used in creative ways.
 
-Figure~\ref{fig:q2-heatmaps} provides multi-panel temporal analysis:
+\section{Storytelling}
 
-\begin{figure}[p]
-    \centering
-    \includegraphics[width=\textwidth]{../figures/q2_heatmap_overview.png}
-    \caption{(Top) Activity periods (P1–P8, gaps >60 days). (Middle) Weekly frequency heatmap. (Bottom) WHO-equivalent intensity (Below/Meets/Extra thresholds). Libraries: Matplotlib + Seaborn.}
-    \label{fig:q2-heatmaps}
-\end{figure}
+\par
+The focus in Storytelling will be the following: A fitness conscious user who
+has a garmin watch, has measured their activities multiple years. With
+questions 1 and 2 we can come to understand whether the user participates in
+varied activity types regardless of their location (suggesting that they might
+sustain their fitness throughout holidays). Through the third question, we can
+come to understand whether this data being recorded, suggests that the user is
+engaging in enough fitness activity to be considered healthy, what periods has
+this happened in, and is the data trending in a positive direction.
 
-Key insight: Consistent training blocks P6–P8 (2025–2026) show highest intensity/frequency.
-
-\subsection{Question 2: Weekly WHO Performance (Q2.2 - Interactive)}
-
-Figure~\ref{fig:q2-lollipop} shows interactive year comparison (2026 screenshot):
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.9\textwidth]{../figures/q2_lollipop_2026.png}
-    \caption{Interactive lollipop chart: weekly WHO-equivalents vs targets. ipywidgets dropdown enables year comparison.}
-    \label{fig:q2-lollipop}
-\end{figure}
-
-\textbf{Library}: Matplotlib + ipywidgets. Reveals 2026 shows improved consistency above 150 min threshold.
-
-\subsection{Question 2: Weekly WHO Performance (Q2.3 - Trend)}
-
-Figure~\ref{fig:q2-trend} analyzes 2026 trajectory:
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.9\textwidth]{../figures/q2_trend_2026.png}
-    \caption{2026 training trajectory with regression trend. Dots colored by WHO thresholds (Below/150–300/300+).}
-    \label{fig:q2-trend}
-\end{figure}
-
-Trend shows slight upward trajectory but inconsistent target achievement.
-
-\subsection{Question 3: Geographic Patterns}
-
-[Placeholder for Q3 map/visualization - add your map chart here]
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.9\textwidth]{../figures/q3_location_map.png}
-    \caption{Activity density by location. Madrid dominates but trail locations show higher intensity.}
-    \label{fig:q3-location}
-\end{figure}
+\par
+We get to explore the fitness journey of an individual through visualizations,
+leaving us with a deep understanding of what their situation is, what is good
+about their current fitness, and how they've improved through out time.
 
 \section{Visualization Summary}
 
 \begin{table}[h]
-\centering
-\begin{tabular}{p{2cm}p{3cm}p{3cm}p{3cm}p{2.5cm}}
-\toprule
-Question & Charts & Chart Type & Library & Data Source \\
-\midrule
-Q1 & Fig.~\ref{fig:q1-activity-types} & Horizontal bar & Seaborn+Matplotlib & activities.csv \\
-Q2 & Fig.~\ref{fig:q2-heatmaps} & Multi-panel heatmap & Matplotlib+Seaborn & activities.csv \\
-   & Fig.~\ref{fig:q2-lollipop} & Lollipop (interactive) & Matplotlib+ipywidgets & activities.csv \\
-   & Fig.~\ref{fig:q2-trend} & Scatter+trend & Seaborn+Matplotlib & activities.csv \\
-Q3 & Fig.~\ref{fig:q3-location} & Map & [Plotly/Bokeh] & activities.csv \\
-\bottomrule
-\end{tabular}
-\caption{Visualization summary meeting all requirements (3+ questions, 5+ charts, 3 libraries, 1+ data source).}
-\label{tab:summary}
+	\centering
+	\begin{tabular}{p{2cm}p{3cm}p{3cm}p{3cm}}
+		\toprule
+		Question & Charts & Chart Type     & Library    \\
+		\midrule
+		Q1       & Fig.   & Horizontal bar & Seaborn    \\
+		         &        &                & Matplotlib \\
+		Q2       & Fig.   & Map            & Plotly     \\
+		         &        &                & Bokeh      \\
+		Q3       & Fig.   & Heatmap        & Seaborn    \\
+		         &        & Timeline       & Matplotlib \\
+		         & Fig.   & Lollipop       & ipywidgets \\
+		         &        & (interactive)  & Matplotlib \\
+		         & Fig.   & Scatter+trend  & Seaborn    \\
+		         &        &                & Matplotlib \\
+		\bottomrule
+	\end{tabular}
+	\caption{Visualization summary meeting all requirements (3+ questions, 5+ charts, 3 libraries, 1+ data source).}
+	\label{tab:summary}
 \end{table}
 
 \section{Library Choices \& Best Practices}
@@ -196,30 +327,22 @@ Q3 & Fig.~\ref{fig:q3-location} & Map & [Plotly/Bokeh] & activities.csv \\
 
 \textbf{Best practices applied} (Unit 1):
 \begin{itemize}
-\item Color encoding follows perceptual principles (sequential for magnitude)
-\item Minimal ink: removed grids, tight spacing
-\item Clear hierarchy: prominent thresholds, trend lines
-\item Accessibility: high contrast, clear typography
+	\item Color encoding follows perceptual principles (sequential for magnitude)
+	\item Minimal ink: removed grids, tight spacing
+	\item Clear hierarchy: prominent thresholds, trend lines
+	\item Accessibility: high contrast, clear typography
 \end{itemize}
 
 \section{Conclusions}
 
 The analysis reveals:
 \begin{itemize}
-\item Running dominates training (47\%) but consistency improved 2025–2026
-\item WHO targets met sporadically; 2026 shows upward trend but needs sustained 300+ min weeks
-\item Location patterns suggest trail runs yield higher intensity
+	\item Running dominates training (47\%) but consistency improved 2025–2026
+	\item WHO targets met sporadically; 2026 shows upward trend but needs sustained 300+ min weeks
+	\item Location patterns suggest trail runs yield higher intensity
 \end{itemize}
 
 Future work: integrate weather data via API, add interactive dashboard with Plotly Dash.
-
-\section*{Video Demonstration}
-
-5-minute video explaining questions + visualizations: \url{https://youtu.be/dQw4w9WgXcQ} (REPLACE WITH YOUR LINK)
-
-\section*{AI Usage Declaration}
-
-Used Qwen2.5:14B (local) for initial CSV schema analysis only. All code, design decisions, and analysis performed manually. Prompts/responses in notebook Section 1.3.
 
 \printbibliography
 
