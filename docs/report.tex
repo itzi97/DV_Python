@@ -47,6 +47,15 @@
 \usepackage[style=numeric,autocite=superscript,backend=biber,sorting=none]{biblatex}
 \addbibresource{./report.bib}
 
+% References
+\makeatletter
+\newcommand*{\sref}[1]{%
+  \hyperref[{#1}]{%
+    \color{accent}\textsuperscript{\ref*{#1}}%
+  }%
+}
+\makeatother
+
 % Graphics and links
 \usepackage{graphicx}
 \usepackage{hyperref}
@@ -69,9 +78,10 @@
 \renewcommand{\headrule}{\color{grid}\hrule height 0.4pt}
 
 % Title formatting
+\renewcommand{\familydefault}{\sfdefault}
 \usepackage{titlesec}
-\titleformat{\section}{\large\bfseries\color{accent}}{\thesection}{0.5em}{}
-\titleformat{\subsection}{\normalsize\bfseries\color{black}}{\thesubsection}{0.5em}{}
+\titleformat{\section}{\large\bfseries\color{accent}\sffamily}{\thesection}{0.5em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{black}\sffamily}{\thesubsection}{0.5em}{}
 \titlespacing*{\section}{0pt}{1.5em}{0.8em}
 \titlespacing*{\subsection}{0pt}{1.2em}{0.6em}
 
@@ -86,7 +96,7 @@
 
 \title{\color{accent}\Huge Python Data Visualization\\Assignment Report}
 \author{\Large\color{black}Itziar Morales Rodríguez}
-\date{\large\color{black}April 12, 2026}
+\date{\large\color{black}\today}
 
 \begin{document}
 \pagecolor{background}\color{black}
@@ -124,7 +134,7 @@ mentioned goal:
 \subsection{Sources}
 
 \par
-Numerous sources are used through out the project such as:
+Numerous sources are used throughout the project such as:
 
 \begin{itemize}
 	\item AI
@@ -142,20 +152,20 @@ or in the case of AI, an explicit note indicating the model and prompt used.
 
 \par
 A point was made to use AI in this project in a manner in which it's answers
-are scrutinized and reviewed, to amke sure hallucinations are not taken into
+are scrutinized and reviewed, to make sure hallucinations are not taken into
 account and answers are not just implemented without a second thought. This
-way, an activate usage of AI is incentivized with certain restraints in place.
+way, an active usage of AI is incentivized with certain restraints in place.
 
 \par
 AI being used for this project was also hosted locally, using smaller models to
-do so to encourage reproduciability (since prompts are also included within
+do so to encourage reproducibility (since prompts are also included within
 the notebook and report).
 
 \section{Dataset}
 
 \par
 Data for this project was required to not have been selected by a different
-student. To minimize the risk of this happening, activity from a Gamrmin
+student. To minimize the risk of this happening, activity from a Garmin
 Forerunner 245 was chosen, reducing the chances of another student having the
 same dataset. The data located in \texttt{./data/activities.csv} consists of:
 
@@ -186,8 +196,8 @@ visualizations that require specific untis to be used such as coordinates
 \par
 Before asking questions about the dataset, it was further analyzed using both
 the \texttt{df.info()} function to check how the data was imported into the
-pandas dataframe. A small AI analysis was invoked using qwen3.5:9b for the
-prompt which was the following:
+pandas dataframe. A small AI analysis was invoked using
+qwen3.5:9b\autocite{qwen} for the prompt which was the following:
 
 \begin{center}
 	Read the linked CSV file and analyze it, create a table with the following
@@ -205,7 +215,7 @@ prompt which was the following:
 
 \par
 The table generated was then used as a starting point although it's content was
-scrutinized and interprerted correctly, assessing whether or not the AI had
+scrutinized and interpreted correctly, assessing whether or not the AI had
 hallucinated when generating it. Some important conclusions reached with the
 help of this analysis (done in section 2.1 of \texttt{data\_viz\_notebook.ipynb})
 where:
@@ -248,7 +258,7 @@ Three questions were formulated based on data exploration:
 \begin{enumerate}
 	\item What types of activities dominate the dataset and their frequencies?
 	\item How do activity patterns vary by location?
-	\item Do recorded activities show case "enough" weekly exercise?
+	\item Do recorded activities showcase "enough" weekly exercise?
 \end{enumerate}
 
 \subsubsection{Question 1: Activity Composition}\label{q1}
@@ -264,7 +274,7 @@ that is taken into account when further exploring other questions.
 \par
 Question 2 proceeds naturally from question 1, as it further dives into
 understanding the nature of the data, in this case, classifying it into
-geogrpahic location rather than categorical activity types. Furthermore, it
+geographic location rather than categorical activity types. Furthermore, it
 also enables the use of different visualization methods due to the unique
 geographic data type, location.
 
@@ -276,74 +286,317 @@ approaches to visualizing and analysing the data, alongside more liberty when
 it comes to choosing what narrative to pursue in storytelling. This allows for
 many different charts to be used, and for data to be used in creative ways.
 
-\section{Storytelling}
+\section{Visualization Prep}
 
 \par
-The focus in Storytelling will be the following: A fitness conscious user who
-has a garmin watch, has measured their activities multiple years. With
-questions 1 and 2 we can come to understand whether the user participates in
-varied activity types regardless of their location (suggesting that they might
-sustain their fitness throughout holidays). Through the third question, we can
-come to understand whether this data being recorded, suggests that the user is
-engaging in enough fitness activity to be considered healthy, what periods has
-this happened in, and is the data trending in a positive direction.
+Before coding out the visualizations, some prep was done in order to steer
+those visualizations in a specific direction, and have a clear idea of what to
+aim for.
+
+\subsection{Storytelling}
 
 \par
-We get to explore the fitness journey of an individual through visualizations,
-leaving us with a deep understanding of what their situation is, what is good
-about their current fitness, and how they've improved through out time.
+A Garmin user tracks 5+ years of fitness data. Q1\sref{q1} and Q2\sref{q2}
+reveal activity variety (locations and types). Q3\sref{q3} dives into health
+trends. We follow them through their health journey.
 
-\section{Visualization Summary}
+\subsection{Colors and Themes}\label{colors}
 
-\begin{table}[h]
+\par
+Colors and themes were chosen purposefully in order to make charts as simple
+and readable as possible. The following design choices were made on purpose to
+enhance clarity, readability and intent:
+
+\begin{itemize}
+	\item Green theme (emerald-500 tailwind\autocite{tailwindcolors} palette) +
+	      teal accents, fitness/health
+	      connotation, high contrast.
+	\item Minimal ink: No grid/borders, no clutter, focus on data.
+	\item Distinct category colors for pre-attentive processing (green vs. gray).
+	\item Custom colormaps (sequential for magnitude, diverging for trends).
+\end{itemize}
+
+\par
+These decisions were made in line with theory from the first unit.
+
+\subsection{Library Choices}
+
+\par
+Due to multiple libraries being used for this project, the following libraries
+were chosen pre emptively:
+
+\begin{itemize}
+	\item \textbf{Q1}\sref{q1}: Matplotlib\autocite{matplotlib} (bars)
+	\item \textbf{Q2}\sref{q2}: Plotly\autocite{plotly} (maps)
+	\item \textbf{Q3}\sref{q3}: Seaborn\autocite{seaborn},
+	      ipywidgets\autocite{ipywidgets}, matplotlib\autocite{matplotlib} (trends)
+\end{itemize}
+
+Thus laying out the following: Q1 for a basic chart, Q2 for diving into map
+charting, Q3 for exploring more creative types of charts.
+
+\section{Visualizations}
+
+\par
+Shared across visualizations, a color palette is declared with colors mentioned
+in section~\ref{colors}, alongside an \texttt{apply\_theme()} function that
+helps consolidate themeing across multiple functions.
+
+\subsection{Q1 - Recorded Activity Types}
+
+\par
+The following options were considered: vertical bar chart, horizontal bar
+chart, pie chart. The \textbr{horizontal bar chart} option was chosen due to
+being able to be ordered and have the highest count at the top, making it very
+easy to read. The other option would have been a pie chart with the walking and
+running segments exploded, but that wouldn't have been appropriate considering
+that they took up such a huge percentage of the total activity mix.
+
+\par
+For the dataset for this chart, data had to be aggregated to get counts by
+activity type, creating another data set in doing so.
+
+\begin{figure}[h]
 	\centering
-	\begin{tabular}{p{2cm}p{3cm}p{3cm}p{3cm}}
+	\includegraphics[width=\textwidth]{../figures/q1_activity_types.png}
+	\caption{Q1 Chart - Recorded Activity Types}
+	\label{fig:q1}
+\end{figure}
+
+\par
+\textbf{Insights}: In Fig.~\ref{fig:q1} one can tell that two specific activities
+dominate the activity mix landscape (being walking and running). This is made
+even clearer with the green color making them pop out whilst the grey color make
+the other activities fall to the background. Styling is simple, with the chart
+not having many distracting elements.
+
+\subsection{Q2 - Maps}
+
+\par
+Maps were chosen for the second question to display variability in locations
+for recorded activities. Two maps were chosen, due to most activities being
+recorded in Madrid, but some activities being recorded elsewhere in Spain. This
+allows for two different types of map to be used.
+
+\par
+For both maps, activities were aggregated by location, such as autonomous
+community or municipality, creating a special data set per chart to be used.
+Location itself was extracted from title, so even though it wasn't explicitly
+given, a work around was used to be able to obtain it.
+
+\subsubsection{Q2a: Activities by Autonomous Community}
+
+\par
+Very simple \textbf{choropleth map} that showcases the stark difference in
+activities recorded in Madrid vs. other autonomous communities. The choropleth
+map was chosen due to communities being able to be colored to show case
+different amounts of activities recorded, although a scatter map could have
+worked too.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{../figures/q2_spain_choropleth.png}
+	\caption{Q2a Chart - Activities by Autonomous Community}
+	\label{fig:q2a}
+\end{figure}
+
+\textbf{Insights}: Fig.~\ref{fig:q2a} shows a much darker shade of green for
+Madrid than for other autonomous communities due to Madrid being more than
+90\% of activities recorded.
+
+\pagebreak
+
+\subsubsection{Q2b: Activities by Municipality (Madrid)}
+
+\par
+Due to Fig~\ref{fig:q2a} showcasing a stark difference between activities
+recorded in Madrid vs. other autonomous communities, it follows that an
+analysis should be made of activities recorded in Madrid.
+
+\par
+A \textbf{scatter map} fits well for this analysis due to circles showing how
+many activities are recorded via size and color, making bigger circles stand out
+for the viewer easier.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{../figures/q2_madrid_scattermap.png}
+	\caption{Q2b Chart - Activities by Municipality (Madrid)}
+	\label{fig:q2b}
+\end{figure}
+
+\textbf{Insights}: Fig.~\ref{fig:q2b} shows how most activities are centered
+around two different municipalities whilst some activities are recorded in other
+municipalities around the north west parts of Madrid, with one outlier being
+in Rascafría.
+
+\subsection{Q3 - Trends}
+
+\par
+This section dives into answering Q3\sref{q3} with creative usage of charts in
+order to point out exercise trends throughout time periods, years and weeks.
+Earlier data was cleaned to create the following columns:
+
+\begin{itemize}
+	\item Week and Year: Extracted from date time.
+	\item Intensity: Extracted from Avg BPM.
+	\item WHO Minutes: Extracted from time and using intensity to calculate it.
+\end{itemize}
+
+\subsubsection{Q3a: Overview Heatmap}
+
+\par
+This particular chart divides itself into three different subplots. This
+reveals whether consistency and volume translate to outcomes.
+
+\paragraph{Period Timeline}
+This first chart grabs different activity periods which are periods during
+which activities are recorded with less than 60 days between each, allowing to
+see how consistent the exercise recording process has been. A horizontal bar
+chart was utilized in a creative way, displacing horizontal bars to emulate
+a \textbf{timeline} chart.
+
+\paragraph{Frequency Heatmap}
+
+A \textbf{heatmap} was chosen for this chart with a green color gradient showcasing
+weeks during which activities were recorded, aggregating data by week and year.
+
+\paragraph{Benefits Heatmap}
+
+This last chart was also a \textbf{heatmap}, but in this case, the WHO Minutes were
+filtered depending on whether or not a specific health benefit was obtained
+that week or not, allowing us to see whether activity frequency translated
+to health benefits.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{../figures/q3_weekly_overview.png}
+	\caption{Q3a Chart - Overview Heatmap}
+	\label{fig:q3a}
+\end{figure}
+
+\textbf{Insights}: Fig.~\ref{fig:q3a} shows how most activities were recorded
+in \textit{bursts} rather than consistently throughout the years. Specific
+periods are highlighted, with a current one in 2026. Most active weeks
+translate to health benefits as shown when comparing middle and bottom
+visualizations.
+
+\pagebreak
+
+\subsubsection{Q3b: Year-Specific Trends}
+
+\par
+Having seen the broad picture of the trend throughout the years, a zoomed in
+chart follows, providing a year-specific view of how activities trended. Due
+to a year having 53 weeks, a \textbf{lollipop} chart was chosen as opposed to
+a bar chart, due to the chart being too visually cluttered if the latter option
+was chosen.
+
+\par
+An interactive widget was coded in to facilitate the same chart
+being able to be used for different years depending on what year is selected in
+the drop down menu. Multiple thresholds were introduced, to keep the idea of
+different health benefits being met if different minute amounts of activity
+were achieved per week, these are easily seen due to color changing as
+thresholds are met.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{../figures/q3_lollipop_2021.png}
+	\caption{Q3b Chart - 2021 Activity Lollipop Chart}
+	\label{fig:q3b}
+\end{figure}
+
+\textbf{Insights}: Fig.~\ref{fig:q3b} Shows how in the year 2021 most weeks are
+empty due to no activities being recorded, but weeks with recorded activities
+tend to always have some kind of health benefit.
+
+\pagebreak
+
+\subsubsection{Q3c: 2026 Weekly Activity Trend}
+
+\par
+Zooming into the most recent period, a \textbf{scatter plot} with a
+\textbf{regression line} was chosen to show how current activity levels are
+evolving over time, and whether the recent trajectory suggests improvement.
+
+\par
+As in previous charts, threshold lines are included to indicate whether weekly
+activity reaches different health-benefit levels. Point colors change depending
+on whether those thresholds are met. A confidence interval is also shown around
+the regression line, making it easier to judge how closely the observed weekly
+values follow the overall trend.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{../figures/q3_trend.png}
+	\caption{Q3c Chart - 2026 Weekly Activity Trend}
+	\label{fig:q3c}
+\end{figure}
+
+\textbf{Insights}: It is still too early to draw strong conclusions, but
+Fig.~\ref{fig:q3c} suggests a slight upward trend in weekly activity. More
+recent points are also more likely to reach at least one health benefit
+threshold than the earlier ones.
+
+\pagebreak
+
+\subsubsection{Visualization Summary}
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{rcll}
 		\toprule
-		Question & Charts & Chart Type     & Library    \\
+		\textbf{Question} & \textbf{Charts}   & \textbf{Chart Type}    & \textbf{Library}        \\
 		\midrule
-		Q1       & Fig.   & Horizontal bar & Seaborn    \\
-		         &        &                & Matplotlib \\
-		Q2       & Fig.   & Map            & Plotly     \\
-		         &        &                & Bokeh      \\
-		Q3       & Fig.   & Heatmap        & Seaborn    \\
-		         &        & Timeline       & Matplotlib \\
-		         & Fig.   & Lollipop       & ipywidgets \\
-		         &        & (interactive)  & Matplotlib \\
-		         & Fig.   & Scatter+trend  & Seaborn    \\
-		         &        &                & Matplotlib \\
+		\midrule
+		Q1\sref{q1}       & Fig.\ref{fig:q1}  & Horizontal bar         & Matplotlib              \\
+		\cmidrule{1-4}
+		Q2\sref{q2}       & Fig.\ref{fig:q2a} & Choropleth             & Plotly                  \\
+		                  & Fig.\ref{fig:q2b} & Scattermap             & Plotly                  \\
+		\cmidrule{1-4}
+		Q3\sref{q3}       & Fig.\ref{fig:q3a} & Timeline + Heatmap     & Matplotlib + Seaborn    \\
+		                  & Fig.\ref{fig:q3b} & Lollipop (interactive) & Matplotlib + ipywidgets \\
+		                  & Fig.\ref{fig:q3c} & Scatter + Regression   & Matplotlib + Seaborn    \\
 		\bottomrule
 	\end{tabular}
-	\caption{Visualization summary meeting all requirements (3+ questions, 5+ charts, 3 libraries, 1+ data source).}
+	\caption{Visualization summary table}
 	\label{tab:summary}
 \end{table}
 
-\section{Library Choices \& Best Practices}
+\par
+Table~\ref{tab:summary} summarizes:
 
-\textbf{Matplotlib}: Core plotting, manual layouts, custom colormaps. Used for precise control (heatmaps, timelines).
-
-\textbf{Seaborn}: Statistical plots (barplot, regplot). Simplified complex visualizations while maintaining customization.
-
-\textbf{ipywidgets}: Interactivity for year comparison. Enhanced exploratory analysis.
-
-\textbf{Best practices applied} (Unit 1):
 \begin{itemize}
-	\item Color encoding follows perceptual principles (sequential for magnitude)
-	\item Minimal ink: removed grids, tight spacing
-	\item Clear hierarchy: prominent thresholds, trend lines
-	\item Accessibility: high contrast, clear typography
+	\item 8 chart types: Horizontal bar, choropleth, scattermap, heatmap, timeline,
+	      lollipop, scatter and regression.
+	\item Interactive and static visualizations.
+	\item 4 libraries used: Matplotlib, Plotly, Seaborn and ipywidgets.
 \end{itemize}
+
+\par
+When it comes to datasets, even though there was one dataset in \texttt{csv}
+format, the resulting dataframe was transformed into specific datasets for each
+different chart, showing how one dataset can be used in many different creative
+ways.
 
 \section{Conclusions}
 
-The analysis reveals:
+\par
+Visualizations reveal the following:
+
 \begin{itemize}
-	\item Running dominates training (47\%) but consistency improved 2025–2026
-	\item WHO targets met sporadically; 2026 shows upward trend but needs sustained 300+ min weeks
-	\item Location patterns suggest trail runs yield higher intensity
+	\item Running and walking dominate activities [Fig.~\ref{fig:q1}].
+	\item Most activities recorded in Madrid, around a specific area [Fig.~\ref{fig:q2a}].
+	\item Activities recorded in bursts (periods) [Fig.~\ref{fig:q3a}].
+	\item WHO target for 150 minutes met when activities were recorded, 300+
+	      minutes one met sporadically [Fig.~\ref{fig:q3b}].
+	\item Current recorded period shows upward trend [Fig.~\ref{fig:q3c}].
 \end{itemize}
 
-Future work: integrate weather data via API, add interactive dashboard with Plotly Dash.
+\pagebreak
 
-\printbibliography
+\section{References}
+\printbibliography[heading=none]
 
 \end{document}
